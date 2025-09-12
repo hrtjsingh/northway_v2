@@ -38,7 +38,8 @@ export function ServicesSection() {
     <section ref={sectionRef} className="py-20" id="services-section">
       <div className="container mx-auto px-4">
         {/* Section Header */}
-        <div className={`text-center space-y-4 mb-16 ${isVisible ? "animate-fade-in" : "opacity-0"}`}>
+        <div className={`text-center space-y-4 mb-16 relative ${isVisible ? "animate-fade-in" : "opacity-0"}`}>
+        
           <div className="inline-block">
             <span className="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium">
               CHOOSE YOUR DESTINATION
