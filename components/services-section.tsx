@@ -35,7 +35,9 @@ export function ServicesSection() {
   }, [])
 
   return (
-    <section ref={sectionRef} className="py-20" id="services-section">
+    <section ref={sectionRef} className="relative py-20 overflow-hidden" id="services-section">
+      {/* Background gradient */}
+      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-primary/10 via-transparent to-secondary/10 dark:from-primary/20 dark:to-secondary/20" />
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <div className={`text-center space-y-4 mb-16 relative ${isVisible ? "animate-fade-in" : "opacity-0"}`}>

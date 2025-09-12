@@ -65,7 +65,7 @@ export function Header() {
               </div>
               <div className="flex flex-col">
                 <span className="font-bold text-lg text-foreground">{siteConfig.name}</span>
-                <span className="text-sm text-primary font-bold text-muted-foreground hidden sm:block">Immigration Consultants</span>
+                <span className="text-sm text-primary font-bold hidden sm:block">Immigration Consultants</span>
               </div>
             </Link>
 
