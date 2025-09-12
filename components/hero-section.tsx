@@ -21,7 +21,6 @@ export function HeroSection() {
   }, [])
 
   const handleDiscoverMore = () => {
-    console.log(" Discover More button clicked")
     // Smooth scroll to services section
     const servicesSection = document.getElementById("services-section")
     if (servicesSection) {
@@ -69,7 +68,7 @@ export function HeroSection() {
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Button>
               <Link href="/contact">
-                <Button variant="outline" size="lg" className="hover-lift bg-transparent w-full sm:w-auto">
+                <Button variant="outline" size="lg" className="dark:hover:text-black dark:hover:bg-primary hover-lift bg-transparent w-full sm:w-auto">
                   Contact Us Today
                 </Button>
               </Link>
