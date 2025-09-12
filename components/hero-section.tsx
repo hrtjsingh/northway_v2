@@ -21,7 +21,7 @@ export function HeroSection() {
   }, [])
 
   const handleDiscoverMore = () => {
-    console.log("[v0] Discover More button clicked")
+    console.log(" Discover More button clicked")
     // Smooth scroll to services section
     const servicesSection = document.getElementById("services-section")
     if (servicesSection) {

@@ -30,7 +30,6 @@ export function ThemeToggle() {
       size="icon"
       onClick={() => {
         const newTheme = isDark ? "light" : "dark"
-        console.log("[v0] Toggling theme from", resolvedTheme, "to", newTheme)
         setTheme(newTheme)
       }}
       className="hover-lift"

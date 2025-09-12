@@ -43,7 +43,7 @@ export function ContactSection() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
-    console.log("[v0] Form submitted with data:", formData)
+    console.log("Form submitted with data:", formData)
 
     // Simulate form submission
     await new Promise((resolve) => setTimeout(resolve, 1000))
