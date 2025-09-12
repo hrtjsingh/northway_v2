@@ -53,6 +53,8 @@ export function Header() {
           <div className="flex h-16 items-center justify-between">
             {/* Logo */}
             <Link href="/" className="flex items-center space-x-2 hover-lift">
+             
+              <div className="text-primary-foreground p-2 rounded-lg">
               <Image
                 src={siteConfig.logo}
                 alt={siteConfig.name}
@@ -60,13 +62,11 @@ export function Header() {
                 width={60}
                 className="object-cover"
               />
-              {/* <div className="bg-primary text-primary-foreground p-2 rounded-lg">
-                <span className="font-bold text-lg">AO</span>
               </div>
               <div className="flex flex-col">
                 <span className="font-bold text-lg text-foreground">{siteConfig.name}</span>
-                <span className="text-xs text-muted-foreground hidden sm:block">Immigration & Visa</span>
-              </div> */}
+                <span className="text-sm text-primary font-bold hidden sm:block">Immigration Consultants</span>
+              </div>
             </Link>
 
             {/* Desktop Navigation */}

@@ -28,7 +28,9 @@ export function TestimonialsSection() {
   }, [])
 
   return (
-    <section ref={sectionRef} className="py-20">
+    <section ref={sectionRef} className="relative py-20 overflow-hidden">
+      {/* Background gradient */}
+      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-secondary/10 via-transparent to-primary/10 dark:from-secondary/20 dark:to-primary/20" />
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <div className={`text-center space-y-4 mb-16 ${isVisible ? "animate-fade-in" : "opacity-0"}`}>

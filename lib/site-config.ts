@@ -27,17 +27,20 @@ export const siteConfig = {
       {
         number: "01",
         title: "Immigrations Experts",
-        description: "Get expert advice on navigating immigration processes worldwide.",
+        description:
+          "Get expert advice on navigating immigration processes worldwide.",
       },
       {
         number: "02",
         title: "Apply for Your Student",
-        description: "Easily apply for your visa with our online application support.",
+        description:
+          "Easily apply for your visa with our online application support.",
       },
       {
         number: "03",
         title: "Consultation",
-        description: "Receive personalized guidance to choose the right immigration path.",
+        description:
+          "Receive personalized guidance to choose the right immigration path.",
       },
     ],
   },
@@ -91,22 +94,44 @@ export const siteConfig = {
       name: "United Kingdom",
       description:
         "Explore world-class education in the United Kingdom, home to prestigious universities and rich cultural heritage. Whether you're pursuing undergraduate studies or advanced degrees, the UK offers excellent academic and career opportunities in a global career.",
-      image: "/london-big-ben-tower-bridge-uk-landmarks.jpg",
+      image: "https://images.unsplash.com/photo-1655340401834-17c9029e8620?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       flag: "🇬🇧",
     },
     {
       name: "Australia",
       description:
         "Discover Australia's vibrant educational scene with top-ranking universities and diverse programs. Known for its high quality of life and excellent research facilities, Australia is the perfect destination for international students seeking academic success and adventure.",
-      image: "/sydney-opera-house-australia-landmarks.jpg",
+      image: "https://images.unsplash.com/photo-1572943873008-ffcf8111ad5b?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       flag: "🇦🇺",
+    },
+    {
+      name: "Canada",
+      description:
+        "Experience Canada’s world-renowned education system and welcoming multicultural environment. With top universities, safe cities, and opportunities for research and innovation, Canada is an ideal destination for international students.",
+      image: "https://plus.unsplash.com/premium_photo-1694475510060-779cea346a97?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      flag: "🇨🇦",
     },
     {
       name: "United States",
       description:
         "Study in the United States, the global leader in innovation and research. With a wide range of universities and cutting-edge programs, the USA provides students with unmatched opportunities for academic and professional growth in diverse environments.",
-      image: "/statue-of-liberty-new-york-usa-landmarks.jpg",
+      image: "https://images.unsplash.com/photo-1751901595964-c7dc097397e4?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       flag: "🇺🇸",
+    },
+
+    {
+      name: "New Zealand",
+      description:
+        "Study amid breathtaking landscapes and innovative programs in New Zealand. Known for its friendly communities and high-quality education, New Zealand offers excellent opportunities for both academic and outdoor adventures.",
+      image: "https://images.unsplash.com/photo-1677557769755-875d8141c0c6?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      flag: "🇳🇿",
+    },
+    {
+      name: "Germany",
+      description:
+        "Join Germany’s tradition of academic excellence and cutting-edge research. With many tuition-free or low-cost programs and a strong economy, Germany attracts students seeking quality education and European cultural experiences.",
+      image: "https://images.unsplash.com/photo-1642965370028-e7c0d9754939?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      flag: "🇩🇪",
     },
   ],
 
@@ -180,6 +205,6 @@ export const siteConfig = {
       { name: "Instagram", href: "#", icon: "Instagram" },
     ],
   },
-}
+};
 
-export type SiteConfig = typeof siteConfig
+export type SiteConfig = typeof siteConfig;

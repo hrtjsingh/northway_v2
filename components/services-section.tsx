@@ -35,10 +35,13 @@ export function ServicesSection() {
   }, [])
 
   return (
-    <section ref={sectionRef} className="py-20" id="services-section">
+    <section ref={sectionRef} className="relative py-20 overflow-hidden" id="services-section">
+      {/* Background gradient */}
+      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-primary/10 via-transparent to-secondary/10 dark:from-primary/20 dark:to-secondary/20" />
       <div className="container mx-auto px-4">
         {/* Section Header */}
-        <div className={`text-center space-y-4 mb-16 ${isVisible ? "animate-fade-in" : "opacity-0"}`}>
+        <div className={`text-center space-y-4 mb-16 relative ${isVisible ? "animate-fade-in" : "opacity-0"}`}>
+        
           <div className="inline-block">
             <span className="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium">
               CHOOSE YOUR DESTINATION
@@ -75,9 +78,9 @@ export function ServicesSection() {
                   <Link href="/contact">
                     <Button
                       variant="outline"
-                      className="group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300 bg-transparent w-full"
+                      className="group-hover:bg-primary dark:group-hover:bg-primary/90 dark:hover:bg-primary/90 group-hover:text-primary-foreground transition-all duration-300 bg-transparent w-full"
                     >
-                      Learn More
+                      To Know More
                       <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                     </Button>
                   </Link>

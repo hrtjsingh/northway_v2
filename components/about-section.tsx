@@ -27,7 +27,9 @@ export function AboutSection() {
   }, [])
 
   return (
-    <section ref={sectionRef} className="py-20 bg-muted/30">
+    <section ref={sectionRef} className="relative py-20 overflow-hidden">
+      {/* Background gradient */}
+      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-background via-muted/40 to-background dark:from-background dark:via-muted/20 dark:to-background" />
       <div className="container mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Content - Images */}
