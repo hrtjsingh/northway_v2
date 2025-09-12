@@ -78,9 +78,9 @@ export function ServicesSection() {
                   <Link href="/contact">
                     <Button
                       variant="outline"
-                      className="group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300 bg-transparent w-full"
+                      className="group-hover:bg-primary dark:group-hover:bg-primary/90 dark:hover:bg-primary/90 group-hover:text-primary-foreground transition-all duration-300 bg-transparent w-full"
                     >
-                      Learn More
+                      To Know More
                       <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                     </Button>
                   </Link>

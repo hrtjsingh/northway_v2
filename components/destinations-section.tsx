@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
 import { siteConfig } from "@/lib/site-config"
 
-export function DestinationsSection() {
+export function DestinationsSection({ isAllDestinations }: { isAllDestinations?: boolean }) {
   const [isVisible, setIsVisible] = useState(false)
   const sectionRef = useRef<HTMLElement>(null)
 
@@ -39,18 +39,21 @@ export function DestinationsSection() {
             </span>
           </div>
           <h2 className="text-3xl md:text-4xl font-bold text-foreground text-balance">
-            For The Study<span className="text-primary">Choose Your Country</span>
+            For The Study<span className="text-primary"> Choose Your Country</span>
           </h2>
         </div>
 
         {/* Countries Grid */}
         <div className="grid md:grid-cols-3 gap-8 mb-12">
-          {siteConfig.countries.map((country, index) => (
+          {siteConfig.countries.map((country, index) => {
+            if (!isAllDestinations && index > 2) {
+              return null
+            }
+            return (
             <Card
               key={country.name}
-              className={`group overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover-lift ${
-                isVisible ? "animate-scale-in" : "opacity-0 scale-90"
-              }`}
+              className={`group overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover-lift ${isVisible ? "animate-scale-in" : "opacity-0 scale-90"
+                }`}
               style={{ animationDelay: `${index * 200}ms` }}
             >
               <div className="relative h-48 overflow-hidden">
@@ -72,26 +75,28 @@ export function DestinationsSection() {
                 <p className="text-muted-foreground leading-relaxed text-pretty">{country.description}</p>
                 <Button
                   variant="outline"
-                  className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300 bg-transparent"
+                  className="w-full dark:group-hover:bg-primary dark:hover:bg-primary/90 group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300 bg-transparent"
                 >
-                  Explore {country.name}
+                  Talk to an expert for {country.name}
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Button>
               </CardContent>
             </Card>
-          ))}
+          )})}
         </div>
 
         {/* CTA */}
-        <div className={`text-center ${isVisible ? "animate-fade-in" : "opacity-0"}`}>
+        {!isAllDestinations && <div className={`text-center ${isVisible ? "animate-fade-in" : "opacity-0"}`}>
           <p className="text-muted-foreground mb-6">
             Would you like to speak to one of our consultant over phone? <strong>Explore All Countries.</strong>
           </p>
-          <Button size="lg" className="hover-lift">
-            View All Destinations
-            <ArrowRight className="ml-2 h-4 w-4" />
+          <Button size="lg" className="hover-lift" asChild>
+            <a href="/destinations">
+              View All Destinations
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </a>
           </Button>
-        </div>
+        </div>}
       </div>
     </section>
   )
