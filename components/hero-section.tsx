@@ -49,7 +49,7 @@ export function HeroSection() {
             <div className="space-y-4">
               <div className="inline-block">
                 <span className="bg-primary text-primary-foreground px-4 py-2 rounded-full text-sm font-medium">
-                  {siteConfig.name.toUpperCase()} IMMIGRATION & VISA
+                  {siteConfig.name.toUpperCase()} IMMIGRATION CONSULTANTS
                 </span>
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight text-balance">

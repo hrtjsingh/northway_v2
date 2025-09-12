@@ -19,9 +19,9 @@ export const siteConfig = {
 
   hero: {
     title: "Immigration & Visa",
-    subtitle: "Agency Worldwide",
+    subtitle: "Agency",
     description:
-      "Northway Immigration Immigration & Visa offers expert guidance and support to make your dreams to study abroad and live in different countries come true.",
+      "Northway Immigration & Visa offers expert guidance and support to make your dreams to study abroad and live in different countries come true.",
     cta: "Discover More",
     stats: [
       {
