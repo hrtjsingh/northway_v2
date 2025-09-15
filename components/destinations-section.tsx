@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
 import { siteConfig } from "@/lib/site-config"
+import Link from "next/link"
 
 export function DestinationsSection({ isAllDestinations }: { isAllDestinations?: boolean }) {
   const [isVisible, setIsVisible] = useState(false)
@@ -29,7 +30,7 @@ export function DestinationsSection({ isAllDestinations }: { isAllDestinations?:
   }, [])
 
   return (
-    <section ref={sectionRef} className="py-20 bg-muted/30">
+    <section ref={sectionRef} className="py-20 bg-gradient-to-br from-primary/5 to-secondary/7">
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <div className={`text-center space-y-4 mb-16 ${isVisible ? "animate-fade-in" : "opacity-0"}`}>
@@ -52,11 +53,11 @@ export function DestinationsSection({ isAllDestinations }: { isAllDestinations?:
             return (
             <Card
               key={country.name}
-              className={`group overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300 hover-lift ${isVisible ? "animate-scale-in" : "opacity-0 scale-90"
+              className={`group overflow-hidden border-0 pt-0 shadow-lg hover:shadow-xl transition-all duration-300 hover-lift ${isVisible ? "animate-scale-in" : "opacity-0 scale-90"
                 }`}
               style={{ animationDelay: `${index * 200}ms` }}
             >
-              <div className="relative h-48 overflow-hidden">
+              <div className="relative h-68 overflow-hidden">
                 <Image
                   src={country.image || "/placeholder.svg"}
                   alt={country.name}
@@ -73,13 +74,15 @@ export function DestinationsSection({ isAllDestinations }: { isAllDestinations?:
               </div>
               <CardContent className="p-6 space-y-4">
                 <p className="text-muted-foreground leading-relaxed text-pretty">{country.description}</p>
+                <Link href="/contact">
                 <Button
                   variant="outline"
                   className="w-full dark:group-hover:bg-primary dark:hover:bg-primary/90 group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300 bg-transparent"
                 >
-                  Talk to an expert for {country.name}
+                  Talk to an expert
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Button>
+                </Link>
               </CardContent>
             </Card>
           )})}

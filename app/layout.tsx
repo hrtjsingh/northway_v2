@@ -6,6 +6,7 @@ import { Analytics } from "@vercel/analytics/next"
 import { ThemeProvider } from "@/components/theme-provider"
 import "./globals.css"
 import { Suspense } from "react"
+import { Toaster } from "@/components/ui/toaster"
 
 export const metadata: Metadata = {
   title: "Northway - Immigration & Visa Agency",
@@ -37,6 +38,7 @@ export default function RootLayout({
           </ThemeProvider>
         </Suspense>
         <Analytics />
+        <Toaster />
       </body>
     </html>
   )

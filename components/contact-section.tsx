@@ -10,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Phone, Mail, MapPin, Clock, Send } from "lucide-react"
 import { siteConfig } from "@/lib/site-config"
+import { useToast } from "@/hooks/use-toast"
 
 export function ContactSection() {
   const [isVisible, setIsVisible] = useState(false)
@@ -22,6 +23,7 @@ export function ContactSection() {
     message: "",
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const { toast } = useToast()
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -43,21 +45,24 @@ export function ContactSection() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
-    console.log("Form submitted with data:", formData)
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      })
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1000))
+      if (!res.ok) {
+        throw new Error('Failed to submit')
+      }
 
-    // Reset form
-    setFormData({
-      name: "",
-      email: "",
-      phone: "",
-      service: "",
-      message: "",
-    })
-    setIsSubmitting(false)
-    alert("Thank you! Your message has been sent successfully.")
+      setFormData({ name: "", email: "", phone: "", service: "", message: "" })
+      toast({ title: "Message sent", description: "We will get back to you soon." })
+    } catch (err) {
+      toast({ variant: "destructive", title: "Submission failed", description: "Please try again." })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleInputChange = (field: string, value: string) => {
@@ -190,7 +195,7 @@ export function ContactSection() {
                     <div className="space-y-2">
                       <label className="text-sm font-medium text-foreground">{siteConfig.contact.form.service}</label>
                       <Select value={formData.service} onValueChange={(value) => handleInputChange("service", value)}>
-                        <SelectTrigger className="hover-lift">
+                        <SelectTrigger className="hover-lift w-full dark:bg-[#181717] dark:hover:bg-[#181717] bg-[#d6d6d6] mt-2">
                           <SelectValue placeholder="Select a service" />
                         </SelectTrigger>
                         <SelectContent>

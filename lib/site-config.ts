@@ -16,13 +16,17 @@ export const siteConfig = {
     { name: "Services", href: "/services" },
     { name: "Contact Us", href: "/contact" },
   ],
-
+  admin: {
+    username: "admin",
+    password: "admin123",
+  },
   hero: {
     title: "Immigration & Visa",
     subtitle: "Agency",
     description:
       "Northway Immigration & Visa offers expert guidance and support to make your dreams to study abroad and live in different countries come true.",
     cta: "Discover More",
+    bg:"https://images.unsplash.com/photo-1544085311-11a028465b03?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     stats: [
       {
         number: "01",

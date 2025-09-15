@@ -6,7 +6,8 @@ import { Menu, X, Phone, Mail, Clock } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { siteConfig } from "@/lib/site-config"
-import Image from "next/image"
+
+import Logo from "./Logo"
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -45,29 +46,14 @@ export function Header() {
       {/* Main Header */}
       <header
         className={`sticky top-0 z-50 w-full border-b transition-all duration-300 ${isScrolled
-            ? "bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-sm"
-            : "bg-background"
+          ? "bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-sm"
+          : "bg-background"
           }`}
       >
         <div className="container mx-auto px-4">
           <div className="flex h-16 items-center justify-between">
             {/* Logo */}
-            <Link href="/" className="flex items-center space-x-2 hover-lift">
-             
-              <div className="text-primary-foreground p-2 rounded-lg">
-              <Image
-                src={siteConfig.logo}
-                alt={siteConfig.name}
-                height={60}
-                width={60}
-                className="object-cover"
-              />
-              </div>
-              <div className="flex flex-col">
-                <span className="font-bold text-lg text-foreground">{siteConfig.name}</span>
-                <span className="text-sm text-primary font-bold hidden sm:block">Immigration Consultants</span>
-              </div>
-            </Link>
+            <Logo />
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-8">
@@ -86,7 +72,9 @@ export function Header() {
             {/* Desktop Actions */}
             <div className="hidden md:flex items-center space-x-4">
               <ThemeToggle />
-              <Button className="hover-lift">Get Consultation</Button>
+              <Link href="/contact">
+                <Button className="hover-lift">Get Consultation</Button>
+              </Link>
             </div>
 
             {/* Mobile Menu Button */}
@@ -114,7 +102,9 @@ export function Header() {
                     {item.name}
                   </Link>
                 ))}
-                <Button className="mt-4 w-full hover-lift">Get Consultation</Button>
+                <Link href="/contact">
+                  <Button className="mt-4 w-full hover-lift">Get Consultation</Button>
+                </Link>
               </nav>
             </div>
           </div>

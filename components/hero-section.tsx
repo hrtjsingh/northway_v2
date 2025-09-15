@@ -35,7 +35,7 @@ export function HeroSection() {
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: `url('https://images.unsplash.com/photo-1544085311-11a028465b03?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')`,
+            backgroundImage: `url('${siteConfig.hero.bg}')`,
           }}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/60 to-background/95 dark:from-background/90 dark:via-background/70 dark:to-background/90" />
