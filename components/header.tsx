@@ -5,11 +5,12 @@ import Link from "next/link"
 import { Menu, X, Phone, Mail, Clock } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { ThemeToggle } from "@/components/theme-toggle"
-import { siteConfig } from "@/lib/site-config"
+import { useSiteConfig } from "@/lib/store/config"
 
 import Logo from "./Logo"
 
 export function Header() {
+  const { config } = useSiteConfig()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
 
@@ -29,16 +30,16 @@ export function Header() {
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
               <Mail className="h-4 w-4" />
-              <span>{siteConfig.email}</span>
+              <span>{config?.email ?? ""}</span>
             </div>
             <div className="flex items-center gap-2">
               <Clock className="h-4 w-4" />
-              <span>{siteConfig.hours}</span>
+              <span>{config?.hours ?? ""}</span>
             </div>
           </div>
           <div className="flex items-center gap-2">
             <Phone className="h-4 w-4" />
-            <span className="font-medium">{siteConfig.phone}</span>
+            <span className="font-medium">{config?.phone ?? ""}</span>
           </div>
         </div>
       </div>
@@ -57,7 +58,7 @@ export function Header() {
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-8">
-              {siteConfig.navigation.map((item) => (
+              {(config?.navigation ?? []).map((item: { name: string; href: string }) => (
                 <Link
                   key={item.name}
                   href={item.href}
@@ -92,7 +93,7 @@ export function Header() {
           <div className="md:hidden border-t bg-background animate-slide-up">
             <div className="container mx-auto px-4 py-4">
               <nav className="flex flex-col space-y-4">
-                {siteConfig.navigation.map((item) => (
+                {(config?.navigation ?? []).map((item: { name: string; href: string }) => (
                   <Link
                     key={item.name}
                     href={item.href}

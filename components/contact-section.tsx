@@ -9,10 +9,11 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Phone, Mail, MapPin, Clock, Send } from "lucide-react"
-import { siteConfig } from "@/lib/site-config"
+import { useSiteConfig } from "@/lib/store/config"
 import { useToast } from "@/hooks/use-toast"
 
 export function ContactSection() {
+  const { config } = useSiteConfig()
   const [isVisible, setIsVisible] = useState(false)
   const sectionRef = useRef<HTMLElement>(null)
   const [formData, setFormData] = useState({
@@ -77,8 +78,8 @@ export function ContactSection() {
           <div className="inline-block">
             <span className="bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium">CONTACT US</span>
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground text-balance">{siteConfig.contact.title}</h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto text-pretty">{siteConfig.contact.description}</p>
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground text-balance">{config?.contact.title}</h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto text-pretty">{config?.contact.description}</p>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-12">
@@ -95,7 +96,7 @@ export function ContactSection() {
                 <div>
                   <h3 className="font-semibold text-foreground mb-2">Call Us</h3>
                   <p className="text-muted-foreground text-sm mb-2">Free Any Time</p>
-                  <p className="font-medium text-primary">{siteConfig.phone}</p>
+                  <p className="font-medium text-primary">{config?.phone}</p>
                 </div>
               </CardContent>
             </Card>
@@ -112,7 +113,7 @@ export function ContactSection() {
                 <div>
                   <h3 className="font-semibold text-foreground mb-2">Email Us</h3>
                   <p className="text-muted-foreground text-sm mb-2">24/7 Support</p>
-                  <p className="font-medium text-secondary">{siteConfig.email}</p>
+                  <p className="font-medium text-secondary">{config?.email}</p>
                 </div>
               </CardContent>
             </Card>
@@ -129,7 +130,7 @@ export function ContactSection() {
                 <div>
                   <h3 className="font-semibold text-foreground mb-2">Visit Us</h3>
                   <p className="text-muted-foreground text-sm mb-2">Office Location</p>
-                  <p className="font-medium text-primary text-sm">{siteConfig.address}</p>
+                  <p className="font-medium text-primary text-sm">{config?.address}</p>
                 </div>
               </CardContent>
             </Card>
@@ -146,7 +147,7 @@ export function ContactSection() {
                 <div>
                   <h3 className="font-semibold text-foreground mb-2">Office Hours</h3>
                   <p className="text-muted-foreground text-sm mb-2">Working Time</p>
-                  <p className="font-medium text-secondary">{siteConfig.hours}</p>
+                  <p className="font-medium text-secondary">{config?.hours}</p>
                 </div>
               </CardContent>
             </Card>
@@ -159,7 +160,7 @@ export function ContactSection() {
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-foreground">{siteConfig.contact.form.name}</label>
+                      <label className="text-sm font-medium text-foreground">{config?.contact.form.name}</label>
                       <Input
                         placeholder="Enter your full name"
                         className="hover-lift"
@@ -169,7 +170,7 @@ export function ContactSection() {
                       />
                     </div>
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-foreground">{siteConfig.contact.form.email}</label>
+                      <label className="text-sm font-medium text-foreground">{config?.contact.form.email}</label>
                       <Input
                         type="email"
                         placeholder="Enter your email"
@@ -183,7 +184,7 @@ export function ContactSection() {
 
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-foreground">{siteConfig.contact.form.phone}</label>
+                      <label className="text-sm font-medium text-foreground">{config?.contact.form.phone}</label>
                       <Input
                         placeholder="Enter your phone number"
                         className="hover-lift"
@@ -193,13 +194,13 @@ export function ContactSection() {
                       />
                     </div>
                     <div className="space-y-2">
-                      <label className="text-sm font-medium text-foreground">{siteConfig.contact.form.service}</label>
+                      <label className="text-sm font-medium text-foreground">{config?.contact.form.service}</label>
                       <Select value={formData.service} onValueChange={(value) => handleInputChange("service", value)}>
                         <SelectTrigger className="hover-lift w-full dark:bg-[#181717] dark:hover:bg-[#181717] bg-[#d6d6d6] mt-2">
                           <SelectValue placeholder="Select a service" />
                         </SelectTrigger>
                         <SelectContent>
-                          {siteConfig.contact.services.map((service) => (
+                          {(config?.contact.services ?? []).map((service) => (
                             <SelectItem key={service} value={service.toLowerCase().replace(/\s+/g, "-")}>
                               {service}
                             </SelectItem>
@@ -210,7 +211,7 @@ export function ContactSection() {
                   </div>
 
                   <div className="space-y-2">
-                    <label className="text-sm font-medium text-foreground">{siteConfig.contact.form.message}</label>
+                    <label className="text-sm font-medium text-foreground">{config?.contact.form.message}</label>
                     <Textarea
                       placeholder="Tell us about your immigration goals..."
                       rows={5}
@@ -223,7 +224,7 @@ export function ContactSection() {
 
                   <Button type="submit" size="lg" className="w-full hover-lift group" disabled={isSubmitting}>
                     <Send className="mr-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                    {isSubmitting ? "Sending..." : siteConfig.contact.form.submit}
+                    {isSubmitting ? "Sending..." : config?.contact.form.submit}
                   </Button>
                 </form>
               </CardContent>

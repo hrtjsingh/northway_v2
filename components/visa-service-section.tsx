@@ -5,9 +5,10 @@ import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
-import { siteConfig } from "@/lib/site-config"
+import { useSiteConfig } from "@/lib/store/config"
 
 export function VisaServiceSection() {
+  const { config } = useSiteConfig()
   const [isVisible, setIsVisible] = useState(false)
   const sectionRef = useRef<HTMLElement>(null)
 
@@ -43,12 +44,12 @@ export function VisaServiceSection() {
               <h2 className="text-3xl md:text-4xl font-bold text-foreground text-balance">
                 Free Online <span className="text-primary">Visa Service</span>
               </h2>
-              <p className="text-muted-foreground leading-relaxed text-pretty">{siteConfig.visaService.description}</p>
+              <p className="text-muted-foreground leading-relaxed text-pretty">{config?.visaService.description}</p>
             </div>
 
             <Link href="/contact">
               <Button size="lg" className="hover-lift group">
-                {siteConfig.visaService.cta}
+                {config?.visaService.cta}
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Button>
             </Link>

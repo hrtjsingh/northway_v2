@@ -4,9 +4,10 @@ import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import { Card, CardContent } from "@/components/ui/card"
 import { Star, Quote } from "lucide-react"
-import { siteConfig } from "@/lib/site-config"
+import { useSiteConfig } from "@/lib/store/config"
 
 export function TestimonialsSection() {
+  const { config } = useSiteConfig()
   const [isVisible, setIsVisible] = useState(false)
   const sectionRef = useRef<HTMLElement>(null)
 
@@ -46,7 +47,7 @@ export function TestimonialsSection() {
 
         {/* Testimonials Grid */}
         <div className="grid md:grid-cols-3 gap-8">
-          {siteConfig.testimonials.map((testimonial, index) => (
+          {(config?.testimonials ?? []).map((testimonial, index) => (
             <Card
               key={testimonial.name}
               className={`group hover-lift transition-all duration-300 border-0 shadow-lg hover:shadow-xl ${

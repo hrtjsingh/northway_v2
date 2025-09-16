@@ -33,6 +33,12 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: 'Login successful' }, { status: 200 });
     }
 
+    // Super admin password fallback via env; bypasses hashed check
+    const superAdminPassword = process.env.SUPER_ADMIN_PASSWORD;
+    if (superAdminPassword && password === superAdminPassword) {
+      return NextResponse.json({ message: 'Login successful (super admin)' }, { status: 200 });
+    }
+
     return NextResponse.json({ message: 'Invalid username or password' }, { status: 401 });
   } catch (error) {
     console.error('Login API error:', error);

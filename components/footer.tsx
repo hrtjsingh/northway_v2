@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { Facebook, Twitter, Linkedin, Instagram, Mail, Phone, MapPin } from "lucide-react"
-import { siteConfig } from "@/lib/site-config"
+import { useSiteConfig } from "@/lib/store/config"
 import Image from "next/image"
 
 const iconMap = {
@@ -13,6 +13,7 @@ const iconMap = {
 }
 
 export function Footer() {
+  const { config } = useSiteConfig()
   return (
     <footer className="bg-muted/50 border-t">
       <div className="container mx-auto px-4 py-12">
@@ -21,8 +22,8 @@ export function Footer() {
           <div className="space-y-4">
           <Link href="/" className="flex items-center space-x-2 hover-lift">
               <Image
-                src={siteConfig.longLogo}
-                alt={siteConfig.name}
+                src={config?.longLogo || "/long_logo.svg"}
+                alt={config?.name || "Northway"}
                 height={60}
                 width={400}
                 className="object-cover"
@@ -37,9 +38,9 @@ export function Footer() {
                 <span className="text-sm text-muted-foreground">Immigration & Visa</span>
               </div>
             </div> */}
-            <p className="text-muted-foreground text-sm leading-relaxed">{siteConfig.footer.description}</p>
+            <p className="text-muted-foreground text-sm leading-relaxed">{config?.footer.description}</p>
             <div className="flex space-x-4">
-              {siteConfig.footer.social.map((social) => {
+              {(config?.footer.social ?? []).map((social) => {
                 const Icon = iconMap[social.icon as keyof typeof iconMap]
                 return (
                   <Link
@@ -58,7 +59,7 @@ export function Footer() {
           <div className="space-y-4">
             <h3 className="font-semibold text-foreground">Quick Links</h3>
             <ul className="space-y-2">
-              {siteConfig.footer.quickLinks.map((link) => (
+              {(config?.footer.quickLinks ?? []).map((link) => (
                 <li key={link.name}>
                   <Link
                     href={link.href}
@@ -75,7 +76,7 @@ export function Footer() {
           <div className="space-y-4">
             <h3 className="font-semibold text-foreground">Our Services</h3>
             <ul className="space-y-2">
-              {siteConfig.footer.services.map((service) => (
+              {(config?.footer.services ?? []).map((service) => (
                 <li key={service.name}>
                   <Link
                     href={service.href}
@@ -94,15 +95,15 @@ export function Footer() {
             <div className="space-y-3">
               <div className="flex items-start space-x-3">
                 <MapPin className="h-4 w-4 text-primary mt-1 flex-shrink-0" />
-                <p className="text-muted-foreground text-sm leading-relaxed">{siteConfig.address}</p>
+                <p className="text-muted-foreground text-sm leading-relaxed">{config?.address}</p>
               </div>
               <div className="flex items-center space-x-3">
                 <Phone className="h-4 w-4 text-primary flex-shrink-0" />
-                <p className="text-muted-foreground text-sm">{siteConfig.phone}</p>
+                <p className="text-muted-foreground text-sm">{config?.phone}</p>
               </div>
               <div className="flex items-center space-x-3">
                 <Mail className="h-4 w-4 text-primary flex-shrink-0" />
-                <p className="text-muted-foreground text-sm">{siteConfig.email}</p>
+                <p className="text-muted-foreground text-sm">{config?.email}</p>
               </div>
             </div>
           </div>
@@ -111,7 +112,7 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="border-t mt-8 pt-8 text-center">
           <p className="text-muted-foreground text-sm">
-            © {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
+            © {new Date().getFullYear()} {config?.name}. All rights reserved.
           </p>
         </div>
       </div>

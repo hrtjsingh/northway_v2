@@ -5,10 +5,11 @@ import Image from "next/image"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
-import { siteConfig } from "@/lib/site-config"
+import { useSiteConfig } from "@/lib/store/config"
 import Link from "next/link"
 
 export function DestinationsSection({ isAllDestinations }: { isAllDestinations?: boolean }) {
+  const { config } = useSiteConfig()
   const [isVisible, setIsVisible] = useState(false)
   const sectionRef = useRef<HTMLElement>(null)
 
@@ -46,7 +47,7 @@ export function DestinationsSection({ isAllDestinations }: { isAllDestinations?:
 
         {/* Countries Grid */}
         <div className="grid md:grid-cols-3 gap-8 mb-12">
-          {siteConfig.countries.map((country, index) => {
+          {(config?.countries ?? []).map((country, index) => {
             if (!isAllDestinations && index > 2) {
               return null
             }
