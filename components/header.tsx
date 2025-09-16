@@ -90,7 +90,7 @@ export function Header() {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden border-t bg-background animate-slide-up">
+          <div className="md:hidden border-t bg-background animate-slide-down absolute w-full">
             <div className="container mx-auto px-4 py-4">
               <nav className="flex flex-col space-y-4">
                 {(config?.navigation ?? []).map((item: { name: string; href: string }) => (
