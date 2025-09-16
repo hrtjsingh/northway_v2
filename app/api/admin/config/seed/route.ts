@@ -18,6 +18,7 @@ export async function POST() {
       name,
       title,
       description,
+      navigation,
       logo,
       longLogo,
       phone,
@@ -34,13 +35,14 @@ export async function POST() {
       contact,
       footer,
     } = siteConfig as unknown as ISiteConfig;
-// console.log(siteConfig)
+console.log(siteConfig)
     const hashedPassword = await hashPassword((admin as any).password);
 
     const doc = await SiteConfigModel.create({
       name,
       title,
       description,
+      navigation,
       logo,
       longLogo,
       phone,

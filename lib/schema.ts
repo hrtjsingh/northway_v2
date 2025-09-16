@@ -5,6 +5,12 @@ export interface IAdmin {
   username: string;
   password: string; // In a real application, this should be hashed!
 }
+export type NavItem = {
+  name: string;
+  href: string;
+};
+
+export type Navigation = NavItem[];
 
 export interface IHeroStat {
   number: string;
@@ -105,6 +111,7 @@ export interface ISiteConfig extends Document {
   name: string;
   title: string;
   description: string;
+  navigation: { name: string; href: string }[];
   logo?: string;
   longLogo?: string;
   phone: string;
@@ -129,7 +136,15 @@ const AdminSchema = new Schema<IAdmin>(
     password: { type: String, required: true }, // Store hashed passwords in production!
   },
   { _id: false }
-); // No _id for subdocuments unless specifically needed
+);
+
+const NavItemSchema = new Schema<NavItem>(
+  {
+    name: { type: String, required: true },
+    href: { type: String, required: true },
+  },
+  { _id: false }
+);
 
 const HeroStatSchema = new Schema<IHeroStat>(
   {
@@ -259,6 +274,7 @@ const SiteConfigSchema = new Schema<ISiteConfig>({
   name: { type: String, required: true },
   title: { type: String, required: true },
   description: { type: String, required: true },
+  navigation: { type: [NavItemSchema], required: true },
   logo: { type: String, required: false },
   longLogo: { type: String, required: false },
   phone: { type: String, required: true },
