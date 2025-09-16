@@ -3,9 +3,10 @@
 import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import { CheckCircle } from "lucide-react"
-import { siteConfig } from "@/lib/site-config"
+import { useSiteConfig } from "@/lib/store/config"
 
 export function AboutSection() {
+  const { config } = useSiteConfig()
   const [isVisible, setIsVisible] = useState(false)
   const sectionRef = useRef<HTMLElement>(null)
 
@@ -83,16 +84,16 @@ export function AboutSection() {
                 </span>
               </div>
               <h2 className="text-3xl md:text-4xl font-bold text-foreground text-balance">
-                {siteConfig.about.title}
+                {config?.about.title}
                 <br />
-                <span className="text-primary">{siteConfig.about.subtitle}</span>
+                <span className="text-primary">{config?.about.subtitle}</span>
               </h2>
-              <p className="text-muted-foreground leading-relaxed text-pretty">{siteConfig.about.description}</p>
+              <p className="text-muted-foreground leading-relaxed text-pretty">{config?.about.description}</p>
             </div>
 
             {/* Features List */}
             <div className="space-y-4">
-              {siteConfig.about.features.map((feature, index) => (
+              {(config?.about.features ?? []).map((feature, index) => (
                 <div
                   key={index}
                   className={`flex items-start space-x-3 ${isVisible ? "animate-scale-in" : "opacity-0 scale-90"}`}

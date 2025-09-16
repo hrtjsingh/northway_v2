@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { GraduationCap, BookOpen, Users, ArrowRight } from "lucide-react"
-import { siteConfig } from "@/lib/site-config"
+import { useSiteConfig } from "@/lib/store/config"
 import Link from "next/link"
 
 const iconMap = {
@@ -14,6 +14,7 @@ const iconMap = {
 }
 
 export function ServicesSection() {
+  const { config } = useSiteConfig()
   const [isVisible, setIsVisible] = useState(false)
   const sectionRef = useRef<HTMLElement>(null)
 
@@ -48,16 +49,16 @@ export function ServicesSection() {
             </span>
           </div>
           <h2 className="text-3xl md:text-4xl font-bold text-foreground text-balance">
-            {siteConfig.services.title}
+            {config?.services.title}
             <br />
-            <span className="text-primary">{siteConfig.services.subtitle}</span>
+            <span className="text-primary">{config?.services.subtitle}</span>
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto text-pretty">{siteConfig.services.description}</p>
+          <p className="text-muted-foreground max-w-2xl mx-auto text-pretty">{config?.services.description}</p>
         </div>
 
         {/* Services Grid */}
         <div className="grid md:grid-cols-3 gap-8">
-          {siteConfig.services.destinations.map((service, index) => {
+          {(config?.services.destinations ?? []).map((service, index) => {
             const Icon = iconMap[service.icon as keyof typeof iconMap]
             return (
               <Card

@@ -18,6 +18,8 @@ export async function POST() {
       name,
       title,
       description,
+      logo,
+      longLogo,
       phone,
       email,
       address,
@@ -29,14 +31,18 @@ export async function POST() {
       visaService,
       countries,
       testimonials,
+      contact,
+      footer,
     } = siteConfig as unknown as ISiteConfig;
-
+// console.log(siteConfig)
     const hashedPassword = await hashPassword((admin as any).password);
 
     const doc = await SiteConfigModel.create({
       name,
       title,
       description,
+      logo,
+      longLogo,
       phone,
       email,
       address,
@@ -48,6 +54,8 @@ export async function POST() {
       visaService,
       countries,
       testimonials,
+      contact,
+      footer
     });
 
     const { admin: createdAdmin, ...rest } = doc.toObject();

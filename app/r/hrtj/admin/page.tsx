@@ -12,7 +12,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
 import { Save, Plus, Trash2, Lock, LogOut } from "lucide-react"
 import { siteConfig, type SiteConfig } from "@/lib/site-config"
-import { Header } from "@/components/header"
 import Logo from "@/components/Logo"
 
 function LoginForm({ onLogin }: { onLogin: () => void }) {
@@ -94,6 +93,7 @@ function LoginForm({ onLogin }: { onLogin: () => void }) {
 export default function AdminPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [config, setConfig] = useState<SiteConfig>(siteConfig)
+  const [configLoading, setConfigLoading] = useState(false)
   const [saving, setSaving] = useState(false)
   const [submissions, setSubmissions] = useState<any[]>([])
   const [loadingSubmissions, setLoadingSubmissions] = useState(false)
@@ -105,6 +105,26 @@ export default function AdminPage() {
       setIsAuthenticated(true)
     }
   }, [])
+
+  useEffect(() => {
+    const fetchConfig = async () => {
+      setConfigLoading(true)
+      try {
+        const res = await fetch("/api/admin/config", { cache: "no-store" })
+        if (res.ok) {
+          const data = await res.json()
+          setConfig(data as SiteConfig)
+        }
+      } catch {
+        // noop
+      } finally {
+        setConfigLoading(false)
+      }
+    }
+    if (isAuthenticated) {
+      fetchConfig()
+    }
+  }, [isAuthenticated])
 
   const handleLogout = () => {
     localStorage.removeItem("adminAuth")
@@ -155,6 +175,14 @@ export default function AdminPage() {
     return <LoginForm onLogin={() => setIsAuthenticated(true)} />
   }
 
+  if (configLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p>Loading configuration...</p>
+      </div>
+    )
+  }
+
   const updateConfig = (path: string, value: any) => {
     setConfig((prev) => {
       const newConfig = { ...prev }
@@ -201,7 +229,7 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background p-6 relative" >
+    <div className="min-h-screen bg-background p-6 relative " >
       <div className="absolute top-2 left-2" onClick={handleLogout}>
         <Logo />
       </div>
@@ -224,8 +252,8 @@ export default function AdminPage() {
           </div>
         </div>
 
-        <Tabs defaultValue="general" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-8 dark:bg-[#2b2a2a] dark:text-primary-foreground">
+        <Tabs defaultValue="general" className="space-y-6 ">
+          <TabsList className="grid w-full grid-cols-10 dark:bg-[#2b2a2a] dark:text-primary-foreground ">
             <TabsTrigger value="general">General</TabsTrigger>
             <TabsTrigger value="admin">Admin</TabsTrigger>
             <TabsTrigger value="hero">Hero</TabsTrigger>
@@ -233,6 +261,8 @@ export default function AdminPage() {
             <TabsTrigger value="services">Services</TabsTrigger>
             <TabsTrigger value="countries">Countries</TabsTrigger>
             <TabsTrigger value="testimonials">Testimonials</TabsTrigger>
+            <TabsTrigger value="contact">Contact</TabsTrigger>
+            <TabsTrigger value="footer">Footer</TabsTrigger>
             <TabsTrigger value="contact-submissions" onClick={fetchSubmissions}>Queries</TabsTrigger>
           </TabsList>
 
@@ -243,6 +273,16 @@ export default function AdminPage() {
                 <CardDescription>Basic site information and contact details</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="logo">Logo URL</Label>
+                    <Input id="logo" value={(config as any).logo || ''} onChange={(e) => updateConfig("logo", e.target.value)} />
+                  </div>
+                  <div>
+                    <Label htmlFor="longLogo">Long Logo URL</Label>
+                    <Input id="longLogo" value={(config as any).longLogo || ''} onChange={(e) => updateConfig("longLogo", e.target.value)} />
+                  </div>
+                </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="name">Site Name</Label>
@@ -292,6 +332,7 @@ export default function AdminPage() {
               </CardContent>
             </Card>
           </TabsContent>
+
 
           <TabsContent value="admin">
             <Card>
@@ -555,7 +596,7 @@ export default function AdminPage() {
                           <Button
                             variant="outline"
                             size="sm"
-                            className="dark:hover:bg-primary dark:border-primary"
+                          className="dark:hover:text-[red]"
                             onClick={() => removeArrayItem("services.destinations", index)}
                           >
                             <Trash2 className="w-4 h-4 mr-2" />
@@ -566,6 +607,7 @@ export default function AdminPage() {
                     ))}
                     <Button
                       variant="outline"
+                      className="dark:hover:bg-primary dark:border-primary"
                       onClick={() =>
                         addArrayItem("services.destinations", {
                           title: "New Destination",
@@ -656,7 +698,7 @@ export default function AdminPage() {
                             onChange={(e) => updateConfig(`countries.${index}.image`, e.target.value)}
                           />
                         </div>
-                        <Button variant="outline" className="dark:hover:bg-primary dark:border-primary" size="sm" onClick={() => removeArrayItem("countries", index)}>
+                        <Button variant="outline" className="dark:hover:text-[red]" size="sm" onClick={() => removeArrayItem("countries", index)}>
                           <Trash2 className="w-4 h-4 mr-2" />
                           Remove Country
                         </Button>
@@ -739,7 +781,7 @@ export default function AdminPage() {
                             />
                           </div>
                         </div>
-                        <Button variant="outline" size="sm" className="dark:hover:bg-primary dark:border-primary" onClick={() => removeArrayItem("testimonials", index)}>
+                        <Button variant="outline" size="sm" className="dark:hover:text-[red]" onClick={() => removeArrayItem("testimonials", index)}>
                           <Trash2 className="w-4 h-4 mr-2" />
                           Remove Testimonial
                         </Button>
@@ -766,7 +808,224 @@ export default function AdminPage() {
               </CardContent>
             </Card>
           </TabsContent>
+          <TabsContent value="contact">
+            <Card>
+              <CardHeader>
+                <CardTitle>Contact Section</CardTitle>
+                <CardDescription>Update the Contact section content and services list</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <Label htmlFor="contact-title">Title</Label>
+                    <Input
+                      id="contact-title"
+                      value={config.contact.title}
+                      onChange={(e) => updateConfig("contact.title", e.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="contact-description">Description</Label>
+                    <Textarea
+                      id="contact-description"
+                      value={config.contact.description}
+                      onChange={(e) => updateConfig("contact.description", e.target.value)}
+                      rows={3}
+                    />
+                  </div>
+                </div>
 
+                <div>
+                  <Label>Services</Label>
+                  <div className="space-y-2 mt-2">
+                    {config.contact.services.map((service, index) => (
+                      <div key={index} className="flex gap-2">
+                        <Input
+                          value={service}
+                          onChange={(e) => updateConfig(`contact.services.${index}`, e.target.value)}
+                          className="flex-1"
+                        />
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="dark:hover:text-[red]"
+                          onClick={() => removeArrayItem("contact.services", index)}
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    ))}
+                    <Button
+                      variant="outline"
+                      className="dark:hover:bg-primary dark:border-primary"
+                      onClick={() => addArrayItem("contact.services", "New Service")}
+                    >
+                      <Plus className="w-4 h-4 mr-2" />
+                      Add Service
+                    </Button>
+                  </div>
+                </div>
+
+                <p className="text-sm text-muted-foreground">
+                  The form field labels (name, email, etc.) are stored in
+                  <code>config.contact.form</code> and can be edited in code if needed.
+                </p>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="footer">
+            <Card>
+              <CardHeader>
+                <CardTitle>Footer</CardTitle>
+                <CardDescription>Update footer description, links, and social profiles</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div>
+                  <Label htmlFor="footer-description">Description</Label>
+                  <Textarea
+                    id="footer-description"
+                    value={config.footer.description}
+                    onChange={(e) => updateConfig("footer.description", e.target.value)}
+                    rows={3}
+                  />
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-semibold mb-2">Quick Links</h3>
+                  <div className="space-y-4">
+                    {config.footer.quickLinks.map((link, index) => (
+                      <Card key={index}>
+                        <CardContent className="pt-4">
+                          <div className="grid grid-cols-2 gap-4">
+                            <div>
+                              <Label>Name</Label>
+                              <Input
+                                value={link.name}
+                                onChange={(e) => updateConfig(`footer.quickLinks.${index}.name`, e.target.value)}
+                              />
+                            </div>
+                            <div>
+                              <Label>Href</Label>
+                              <Input
+                                value={link.href}
+                                onChange={(e) => updateConfig(`footer.quickLinks.${index}.href`, e.target.value)}
+                              />
+                            </div>
+                          </div>
+                          <div className="mt-3">
+                            <Button variant="outline" size="sm" className="dark:hover:text-[red]" onClick={() => removeArrayItem("footer.quickLinks", index)}>
+                              <Trash2 className="w-4 h-4 mr-2" />
+                              Remove Link
+                            </Button>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                    <Button
+                      variant="outline"
+                      className="dark:hover:bg-primary dark:border-primary"
+                      onClick={() => addArrayItem("footer.quickLinks", { name: "New Link", href: "/" })}
+                    >
+                      <Plus className="w-4 h-4 mr-2" />
+                      Add Quick Link
+                    </Button>
+                  </div>
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-semibold mb-2">Services Links</h3>
+                  <div className="space-y-4">
+                    {config.footer.services.map((link, index) => (
+                      <Card key={index}>
+                        <CardContent className="pt-4">
+                          <div className="grid grid-cols-2 gap-4">
+                            <div>
+                              <Label>Name</Label>
+                              <Input
+                                value={link.name}
+                                onChange={(e) => updateConfig(`footer.services.${index}.name`, e.target.value)}
+                              />
+                            </div>
+                            <div>
+                              <Label>Href</Label>
+                              <Input
+                                value={link.href}
+                                onChange={(e) => updateConfig(`footer.services.${index}.href`, e.target.value)}
+                              />
+                            </div>
+                          </div>
+                          <div className="mt-3">
+                            <Button variant="outline" size="sm" className="dark:hover:text-[red]" onClick={() => removeArrayItem("footer.services", index)}>
+                              <Trash2 className="w-4 h-4 mr-2" />
+                              Remove Service Link
+                            </Button>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                    <Button
+                      variant="outline"
+                      className="dark:hover:bg-primary dark:border-primary"
+                      onClick={() => addArrayItem("footer.services", { name: "New Service", href: "/contact" })}
+                    >
+                      <Plus className="w-4 h-4 mr-2" />
+                      Add Service Link
+                    </Button>
+                  </div>
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-semibold mb-2">Social Links</h3>
+                  <div className="space-y-4">
+                    {config.footer.social.map((social, index) => (
+                      <Card key={index}>
+                        <CardContent className="pt-4">
+                          <div className="grid grid-cols-3 gap-4">
+                            <div>
+                              <Label>Name</Label>
+                              <Input
+                                value={social.name}
+                                onChange={(e) => updateConfig(`footer.social.${index}.name`, e.target.value)}
+                              />
+                            </div>
+                            <div>
+                              <Label>Href</Label>
+                              <Input
+                                value={social.href}
+                                onChange={(e) => updateConfig(`footer.social.${index}.href`, e.target.value)}
+                              />
+                            </div>
+                            <div>
+                              <Label>Icon</Label>
+                              <Input
+                                value={social.icon}
+                                onChange={(e) => updateConfig(`footer.social.${index}.icon`, e.target.value)}
+                              />
+                            </div>
+                          </div>
+                          <div className="mt-3">
+                            <Button variant="outline" size="sm" className="dark:hover:text-[red]" onClick={() => removeArrayItem("footer.social", index)}>
+                              <Trash2 className="w-4 h-4 mr-2" />
+                              Remove Social Link
+                            </Button>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                    <Button
+                      variant="outline"
+                      className="dark:hover:bg-primary dark:border-primary"
+                      onClick={() => addArrayItem("footer.social", { name: "New", href: "#", icon: "Facebook" })}
+                    >
+                      <Plus className="w-4 h-4 mr-2" />
+                      Add Social Link
+                    </Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
           <TabsContent value="contact-submissions">
             <Card>
               <CardHeader>

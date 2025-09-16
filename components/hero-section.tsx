@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { ArrowRight, Users, FileText, MessageCircle } from "lucide-react"
-import { siteConfig } from "@/lib/site-config"
+import { useSiteConfig } from "@/lib/store/config"
 import Link from "next/link"
 
 const iconMap = {
@@ -14,6 +14,7 @@ const iconMap = {
 }
 
 export function HeroSection() {
+  const { config } = useSiteConfig()
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
@@ -35,7 +36,7 @@ export function HeroSection() {
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: `url('${siteConfig.hero.bg}')`,
+            backgroundImage: `url('${config?.hero.bg ?? ""}')`,
           }}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/60 to-background/95 dark:from-background/90 dark:via-background/70 dark:to-background/90" />
@@ -49,22 +50,22 @@ export function HeroSection() {
             <div className="space-y-4">
               <div className="inline-block">
                 <span className="bg-primary text-primary-foreground px-4 py-2 rounded-full text-sm font-medium">
-                  {siteConfig.name.toUpperCase()} IMMIGRATION CONSULTANTS
+                  {(config?.name ?? "").toUpperCase()} IMMIGRATION CONSULTANTS
                 </span>
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight text-balance">
-                {siteConfig.hero.title}
+                {config?.hero.title}
                 <br />
-                <span className="text-primary">{siteConfig.hero.subtitle}</span>
+                <span className="text-primary">{config?.hero.subtitle}</span>
               </h1>
               <p className="text-lg text-muted-foreground leading-relaxed max-w-xl text-pretty">
-                {siteConfig.hero.description}
+                {config?.hero.description}
               </p>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4">
               <Button size="lg" className="hover-lift group" onClick={handleDiscoverMore}>
-                {siteConfig.hero.cta}
+                {config?.hero.cta}
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Button>
               <Link href="/contact">
@@ -85,7 +86,7 @@ export function HeroSection() {
 
           {/* Right Content - Stats Cards */}
           <div className={`space-y-6 ${isVisible ? "animate-slide-up" : "opacity-0 translate-y-8"}`}>
-            {siteConfig.hero.stats.map((stat, index) => (
+            {(config?.hero.stats ?? []).map((stat, index) => (
               <Card
                 key={stat.number}
                 className={`hover-lift transition-all duration-300 ${
