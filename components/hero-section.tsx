@@ -54,7 +54,7 @@ export function HeroSection() {
                 </span>
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight text-balance">
-                {config?.hero.title}
+                {config?.hero.title || "Immigration & Visa Agency"}
                 <br />
                 <span className="text-primary">{config?.hero.subtitle}</span>
               </h1>
