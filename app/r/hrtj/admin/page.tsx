@@ -227,7 +227,11 @@ export default function AdminPage() {
       return newConfig
     })
   }
-
+  const removeMenuItem = (index: number) => {
+    const updated = [...config.navigation];
+    updated.splice(index, 1);
+    updateConfig("navigation", updated);
+  }
   return (
     <div className="min-h-screen bg-background p-6 relative " >
       <div className="absolute top-2 left-2" onClick={handleLogout}>
@@ -253,9 +257,10 @@ export default function AdminPage() {
         </div>
 
         <Tabs defaultValue="general" className="space-y-6 ">
-          <TabsList className="grid w-full grid-cols-10 dark:bg-[#2b2a2a] dark:text-primary-foreground ">
+          <TabsList className="grid w-full grid-cols-10 dark:bg-[#2b2a2a] dark:text-primary-foreground">
             <TabsTrigger value="general">General</TabsTrigger>
-            <TabsTrigger value="admin">Admin</TabsTrigger>
+            <TabsTrigger value="menu">Menu</TabsTrigger>
+            {/* <TabsTrigger value="admin">Admin</TabsTrigger> */}
             <TabsTrigger value="hero">Hero</TabsTrigger>
             <TabsTrigger value="about">About</TabsTrigger>
             <TabsTrigger value="services">Services</TabsTrigger>
@@ -332,9 +337,63 @@ export default function AdminPage() {
               </CardContent>
             </Card>
           </TabsContent>
+          <TabsContent value="menu">
+            <Card>
+              <CardHeader>
+                <CardTitle>Navigation Menu</CardTitle>
+                <CardDescription>Manage header navigation links</CardDescription>
+              </CardHeader>
+
+              <CardContent className="space-y-4">
+                {config.navigation.map((item, index) => (
+                  <div
+                    key={index}
+                    className="grid grid-cols-[1fr_1fr_auto] gap-4 items-center"
+                  >
+                    {/* Name */}
+                    <div>
+                      <Label>Name</Label>
+                      <Input
+                        value={item.name}
+                        onChange={(e) =>
+                          updateConfig(`navigation.${index}.name`, e.target.value)
+                        }
+                      />
+                    </div>
+                    <div>
+                      <Label>Href</Label>
+                      <Input
+                        value={item.href}
+                        onChange={(e) =>
+                          updateConfig(`navigation.${index}.href`, e.target.value)
+                        }
+                      />
+                    </div>
+
+                    <Button variant="outline" className="dark:hover:text-[red]" size="sm" onClick={() => {removeMenuItem(index)}}>
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  </div>
+                ))}
+
+                {/* Add new menu item */}
+                <Button
+                  type="button"
+                  onClick={() =>
+                    updateConfig("navigation", [
+                      ...config.navigation,
+                      { name: "", href: "" },
+                    ])
+                  }
+                >
+                  + Add Menu Item
+                </Button>
+              </CardContent>
+            </Card>
+          </TabsContent>
 
 
-          <TabsContent value="admin">
+          {/* <TabsContent value="admin">
             <Card>
               <CardHeader>
                 <CardTitle>Admin Settings</CardTitle>
@@ -365,7 +424,7 @@ export default function AdminPage() {
                 </p>
               </CardContent>
             </Card>
-          </TabsContent>
+          </TabsContent> */}
 
           <TabsContent value="hero">
             <Card>
@@ -596,7 +655,7 @@ export default function AdminPage() {
                           <Button
                             variant="outline"
                             size="sm"
-                          className="dark:hover:text-[red]"
+                            className="dark:hover:text-[red]"
                             onClick={() => removeArrayItem("services.destinations", index)}
                           >
                             <Trash2 className="w-4 h-4 mr-2" />
